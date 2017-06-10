@@ -1,0 +1,9 @@
+ext {
+    supportLibraryVersion = '25.4.0'
+
+    support = [
+        appCompat : "com.android.support:appcompat-v7:$supportLibraryVersion",
+        utils : "com.android.support:support-core-utils:$supportLibraryVersion",
+        fragments : "com.android.support:support-fragment:$supportLibraryVersion"
+    ]
+}

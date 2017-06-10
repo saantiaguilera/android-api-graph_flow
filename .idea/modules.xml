@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/dag/dag.iml" filepath="$PROJECT_DIR$/dag/dag.iml" />
+      <module fileurl="file://$PROJECT_DIR$/direction_acyclic_graph.iml" filepath="$PROJECT_DIR$/direction_acyclic_graph.iml" />
+      <module fileurl="file://$PROJECT_DIR$/testapp/testapp.iml" filepath="$PROJECT_DIR$/testapp/testapp.iml" />
+    </modules>
+  </component>
+</project>
