@@ -6,4 +6,9 @@ ext {
         utils : "com.android.support:support-core-utils:$supportLibraryVersion",
         fragments : "com.android.support:support-fragment:$supportLibraryVersion"
     ]
+
+    junitVersion = '4.12'
+    test = [
+        junit : "junit:junit:$junitVersion"
+    ]
 }

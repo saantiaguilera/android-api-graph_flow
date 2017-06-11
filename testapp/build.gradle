@@ -1,12 +1,13 @@
 apply plugin:'com.android.application'
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.2"
+    compileSdkVersion project.targetSdkVersion.toInteger()
+    buildToolsVersion androidBuildToolsVersion
+
     defaultConfig {
+        minSdkVersion project.minSdkVersion
+        targetSdkVersion project.targetSdkVersion
         applicationId "com.u.direction_acyclic_graph"
-        minSdkVersion 14
-        targetSdkVersion 25
         versionCode 1
         versionName "1.0"
     }
