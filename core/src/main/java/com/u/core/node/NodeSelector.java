@@ -1,4 +1,4 @@
-package com.u.dag.node;
+package com.u.core.node;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;

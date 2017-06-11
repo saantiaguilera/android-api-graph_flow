@@ -1,4 +1,4 @@
 dependencies {
     compile support.fragments
-    compile project(path:':dag')
+    compile project(path:':core')
 }

@@ -4,6 +4,8 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:2.3.2'
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7.3'
+        classpath 'com.github.dcendents:android-maven-gradle-plugin:1.5'
     }
 }
 
@@ -36,12 +38,15 @@ configure(subprojects.findAll { it.name != 'testapp' }) {
         }
     }
 
+    artifactName = project.name
+
     dependencies {
         testCompile test.junit
     }
+
+    apply from: '../publish.gradle'
 }
 
 task clean(type:Delete) {
     delete rootProject.buildDir
 }
-

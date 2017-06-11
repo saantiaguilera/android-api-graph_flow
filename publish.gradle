@@ -1,0 +1,90 @@
+apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: "com.jfrog.bintray"
+
+def siteUrl = 'https://github.com/saantiaguilera/android-api-graph_flow'
+def gitUrl = 'https://github.com/saantiaguilera/android-api-graph_flow.git'
+
+install {
+    repositories.mavenInstaller {
+        pom {
+            project {
+                packaging 'aar'
+
+                name 'com.saantiaguilera:graph_flow'
+                description = 'Show a flow of fragments/views/wver via connections in a graph'
+                url siteUrl
+
+                groupId groupName
+                artifactId artifactName
+                version versionName
+
+                licenses {
+                    license {
+                        name 'GPL-3.0'
+                        url 'https://www.gnu.org/licenses/gpl.txt'
+                        distribution 'repo'
+                    }
+                }
+                developers {
+                    developer {
+                        id 'saantiaguilera'
+                        name 'Santiago Aguilera'
+                        email 'marquito.santi@gmail.com'
+                    }
+                }
+                scm {
+                    connection gitUrl
+                    developerConnection gitUrl
+                    url siteUrl
+                }
+            }
+        }
+    }
+}
+
+task sourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier = 'sources'
+}
+
+task javadoc(type: Javadoc) {
+    source = android.sourceSets.main.java.srcDirs
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+    destinationDir = file("../javadoc/")
+    failOnError false
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+artifacts {
+    archives javadocJar
+    archives sourcesJar
+}
+
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+
+bintray {
+    user = properties.getProperty("bintray.user")
+    key = properties.getProperty("bintray.apikey")
+
+    configurations = ['archives']
+    pkg {
+        repo = "maven"
+        name = "com.saantiaguilera:graph_flow"
+        websiteUrl = siteUrl
+        vcsUrl = gitUrl
+        licenses = ['GPL-3.0']
+        publish = true
+        version {
+            name = project.version
+            gpg {
+                sign = true
+                passphrase = properties.getProperty("bintray.gpg.password")
+            }
+        }
+    }
+}

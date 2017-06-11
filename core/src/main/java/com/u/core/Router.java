@@ -1,13 +1,13 @@
-package com.u.dag;
+package com.u.core;
 
 import android.os.Bundle;
 import android.support.annotation.CheckResult;
 import android.support.annotation.IntDef;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import com.u.dag.graph.Graph;
-import com.u.dag.node.Node;
-import com.u.dag.node.NodeSwitcher;
+import com.u.core.graph.Graph;
+import com.u.core.node.Node;
+import com.u.core.node.NodeSwitcher;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;

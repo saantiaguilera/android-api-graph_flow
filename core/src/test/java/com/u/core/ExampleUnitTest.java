@@ -1,4 +1,4 @@
-package com.u.dag;
+package com.u.core;
 
 import org.junit.Test;
 

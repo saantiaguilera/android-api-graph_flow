@@ -1,8 +1,8 @@
-package com.u.dag.node;
+package com.u.core.node;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import com.u.dag.Router;
+import com.u.core.Router;
 
 /**
  * Created by saguilera on 6/10/17.

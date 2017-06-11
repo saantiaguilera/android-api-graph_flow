@@ -1,8 +1,8 @@
-package com.u.dag.graph;
+package com.u.core.graph;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import com.u.dag.node.Node;
+import com.u.core.node.Node;
 import java.util.List;
 
 /**

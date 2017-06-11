@@ -7,8 +7,8 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
-import com.u.dag.Router;
-import com.u.dag.node.NodeSwitcher;
+import com.u.core.Router;
+import com.u.core.node.NodeSwitcher;
 import java.lang.ref.WeakReference;
 
 /**
@@ -68,10 +68,10 @@ public class NodeFragmentSwitcher implements NodeSwitcher<Fragment> {
 
             switch (how) {
                 case Router.DIRECTION_FORWARD:
-                    transaction.setCustomAnimations(com.u.dag.R.anim.enter_from_right, com.u.dag.R.anim.exit_to_left);
+                    transaction.setCustomAnimations(com.u.core.R.anim.enter_from_right, com.u.core.R.anim.exit_to_left);
                     break;
                 case Router.DIRECTION_BACKWARD:
-                    transaction.setCustomAnimations(com.u.dag.R.anim.enter_from_left, com.u.dag.R.anim.exit_to_right);
+                    transaction.setCustomAnimations(com.u.core.R.anim.enter_from_left, com.u.core.R.anim.exit_to_right);
                     break;
                 // By default dont add anything
             }
