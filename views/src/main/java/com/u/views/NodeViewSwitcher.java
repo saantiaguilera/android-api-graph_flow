@@ -88,11 +88,16 @@ public class NodeViewSwitcher implements NodeSwitcher<View> {
                 nodeView.animate()
                     .setDuration(400)
                     .alpha(1f)
+                    .setListener(null)
                     .start();
             } else {
+                if (before == nodeView) {
+                    return nodeView; // They are the same...
+                }
+
                 before.animate()
                     .setDuration(400)
-                    .translationX(how == Router.DIRECTION_BACKWARD ? parent.getWidth() : -parent.getWidth())
+                    .xBy(how == Router.DIRECTION_BACKWARD ? parent.getWidth() : -parent.getWidth())
                     .alpha(0f)
                     .setListener(new Animator.AnimatorListener() {
                         @Override
@@ -116,8 +121,9 @@ public class NodeViewSwitcher implements NodeSwitcher<View> {
                 nodeView.setAlpha(0f);
                 nodeView.animate()
                     .setDuration(400)
-                    .translationX(how == Router.DIRECTION_BACKWARD ? parent.getWidth() : -parent.getWidth())
+                    .xBy(how == Router.DIRECTION_BACKWARD ? parent.getWidth() : -parent.getWidth())
                     .alpha(1f)
+                    .setListener(null)
                     .start();
             }
         }

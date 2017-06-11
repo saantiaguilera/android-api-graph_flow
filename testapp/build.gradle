@@ -14,4 +14,6 @@ android {
 
 dependencies {
     compile support.appCompat
+    compile project(path:':dag')
+    compile project(path:':views')
 }

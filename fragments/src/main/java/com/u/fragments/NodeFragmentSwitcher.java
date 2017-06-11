@@ -67,10 +67,10 @@ public class NodeFragmentSwitcher implements NodeSwitcher<Fragment> {
             FragmentTransaction transaction = context.getSupportFragmentManager().beginTransaction();
 
             switch (how) {
-                case Router.DIRECTION_BACKWARD:
+                case Router.DIRECTION_FORWARD:
                     transaction.setCustomAnimations(com.u.dag.R.anim.enter_from_right, com.u.dag.R.anim.exit_to_left);
                     break;
-                case Router.DIRECTION_FORWARD:
+                case Router.DIRECTION_BACKWARD:
                     transaction.setCustomAnimations(com.u.dag.R.anim.enter_from_left, com.u.dag.R.anim.exit_to_right);
                     break;
                 // By default dont add anything

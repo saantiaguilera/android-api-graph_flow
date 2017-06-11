@@ -91,19 +91,19 @@ public final class DirectedAcyclicGraph implements Graph {
      */
     @Nullable
     @Override
-    public List<Node> getIncomingEdges(@NonNull Node node) {
+    public List<Node> getOutgoingEdges(@NonNull Node node) {
         return mGraph.get(node);
     }
 
     /**
-     * Get any outgoing edges for the given node (i.e. nodes which have an incoming edge
+     * Get any incoming edges for the given node (i.e. nodes which have an incoming edge
      * from the given node).
      *
      * @return a list containing any outgoing edges, or null if there are none.
      */
     @Nullable
     @Override
-    public List<Node> getOutgoingEdges(@NonNull Node node) {
+    public List<Node> getIncomingEdges(@NonNull Node node) {
         ArrayList<Node> result = null;
         for (int i = 0, size = mGraph.size(); i < size; i++) {
             ArrayList<Node> edges = mGraph.valueAt(i);

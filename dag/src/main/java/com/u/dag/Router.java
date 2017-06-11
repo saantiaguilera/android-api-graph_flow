@@ -10,6 +10,7 @@ import com.u.dag.node.Node;
 import com.u.dag.node.NodeSwitcher;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
@@ -27,6 +28,8 @@ public final class Router<RenderObject> {
     private @NonNull Stack<Node> decisions;
     private Node current;
 
+    private List<OnNodeCommitListener<RenderObject>> onNodeCommitListeners;
+
     private @NonNull NodeSwitcher<RenderObject> nodeSwitcher;
 
     @Retention(RetentionPolicy.SOURCE)
@@ -43,15 +46,37 @@ public final class Router<RenderObject> {
         this.graph = graph;
         this.nodeSwitcher = nodeSwitcher;
         this.decisions = new Stack<>();
+        this.onNodeCommitListeners = new ArrayList<>();
+    }
 
-        Node root = graph.getRoot();
-        if (root == null) {
-            throw new IllegalStateException("Router with empty graph is meaningless, please provide a non empty graph");
+    /**
+     * Adds a listener to be notified when a node from the graph is commited inside the container.
+     *
+     * <b>Note:</b>Careful the listeners are kept as <b>STRONG REFERENCES</b>, please if not using isolated classes
+     * remember to remove them with {@link #removeOnNodeCommitListener(OnNodeCommitListener)}
+     *
+     * @param listener to notify of the event
+     * @return router instance
+     */
+    @NonNull
+    public Router<RenderObject> addOnNodeCommitListener(@NonNull OnNodeCommitListener<RenderObject> listener) {
+        if (!onNodeCommitListeners.contains(listener)) {
+            onNodeCommitListeners.add(listener);
         }
+        return this;
+    }
 
-        // Add the root and commit it
-        decisions.push(current);
-        commit(current, DIRECTION_NONE);
+    /**
+     * Remove a listener from the list.
+     * @param listener to remove
+     * @return instance of the router
+     */
+    @NonNull
+    public Router<RenderObject> removeOnNodeCommitListener(@NonNull OnNodeCommitListener<RenderObject> listener) {
+        if (onNodeCommitListeners.contains(listener)) {
+            onNodeCommitListeners.remove(listener);
+        }
+        return this;
     }
 
     /**
@@ -68,7 +93,37 @@ public final class Router<RenderObject> {
 
         this.current = node;
 
-        return nodeSwitcher.commit(node.getDescriptor(), movement, node.hashCode());
+        RenderObject renderObject = nodeSwitcher.commit(node.getDescriptor(), movement, node.hashCode());
+
+        for (OnNodeCommitListener<RenderObject> listener : onNodeCommitListeners) {
+            listener.onNodeCommited(renderObject, node.getTag());
+        }
+
+        return renderObject;
+    }
+
+    /**
+     * Possibly the always first entry point of the router.
+     * This method commits the root of the graph to the container.
+     *
+     * <b>Note:</b>Calling this method will always make it like a "fresh" start.
+     *
+     * @return object rendered from the root node
+     */
+    @Nullable
+    @CheckResult
+    public RenderObject fromRoot() {
+        Node root = graph.getRoot();
+        if (root == null) {
+            throw new IllegalStateException("Router with empty graph is meaningless, please provide a non empty graph");
+        }
+
+        decisions.clear();
+        nodeSwitcher.clearAll();
+
+        // Add the root and commit it
+        decisions.push(root);
+        return commit(root, DIRECTION_NONE);
     }
 
     /**
@@ -118,25 +173,39 @@ public final class Router<RenderObject> {
     @Nullable
     @CheckResult
     public RenderObject back() {
+        if (current == null) {
+            return null; // You are calling back before using the router!
+        }
+
         List<Node> incomingEdges = graph.getIncomingEdges(current);
         if (incomingEdges == null || incomingEdges.isEmpty()) {
             //we are at the beginning
             return null;
         }
 
-        // Use the decisions stack that have been done til now. If its empty means we are
-        // either at the root or we have done a jump.
-        if (!decisions.empty()) {
-            return commit(decisions.pop(), DIRECTION_BACKWARD);
+        // Use the decisions stack that have been done til now. It cant be empty, at least
+        // 1 decision has to always be active
+        if (decisions.size() > 1) {
+            decisions.pop(); // Remove the current node that is being rendered.
+            return commit(decisions.peek(), DIRECTION_BACKWARD); // Commit the now top, without poping it
         }
 
-        // If there are no decisions performed, use the incoming edges
+        // If there were no decisions performed, use the incoming edges to traverse the graph backwards..
         if (incomingEdges.size() == 1) {
-            // Its only one choice so its this..
+            // Its only one choice so its this. If theres only 1 decision atm, remove it since this is the new "head"
+            if (decisions.size() == 1) {
+                decisions.pop();
+                decisions.push(incomingEdges.get(0));
+            }
             return commit(incomingEdges.get(0), DIRECTION_BACKWARD);
         } else {
             for (Node edge : incomingEdges) {
                 if (edge.select(null)) {
+                    // If theres only 1 decision atm, remove it since this is the new "head"
+                    if (decisions.size() == 1) {
+                        decisions.pop();
+                        decisions.push(edge);
+                    }
                     return commit(edge, DIRECTION_BACKWARD);
                 }
             }
@@ -169,6 +238,7 @@ public final class Router<RenderObject> {
     public RenderObject jump(@NonNull Node node, @Direction int movement) {
         if (graph.contains(node)) {
             decisions.clear();
+            nodeSwitcher.clearAll();
             decisions.push(node);
             return commit(node, movement);
         } else {
@@ -274,6 +344,15 @@ public final class Router<RenderObject> {
             );
         }
 
+    }
+
+    public interface OnNodeCommitListener<RenderObject> {
+        /**
+         * Called when a node from the graph has been commited to the container
+         * @param rendered object rendered from the node (view/fragment/etc)
+         * @param nodeTag tag of the commited node (if applied, else null)
+         */
+        void onNodeCommited(@Nullable RenderObject rendered, @Nullable String nodeTag);
     }
 
 }
