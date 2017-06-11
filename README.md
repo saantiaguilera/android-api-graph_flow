@@ -122,6 +122,10 @@ The router is the class in charge of managing the whole graph flow. The router p
 
 - _jump_: Jumps to a given node
 
+## Proguard
+
+This library supports proguard transitively, no need to add extra rules :)
+
 ## Contributing
 
 Feel free to submit me issues or fork it and do pull requests with changes!
