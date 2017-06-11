@@ -43,4 +43,32 @@ public class Node {
     public boolean select(@Nullable Bundle flowParams) {
         return selector.select(flowParams);
     }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Node)) {
+            return false;
+        }
+
+        final Node node = (Node) o;
+
+        if (!getDescriptor().equals(node.getDescriptor())) {
+            return false;
+        }
+        if (!selector.equals(node.selector)) {
+            return false;
+        }
+        return getTag() != null ? getTag().equals(node.getTag()) : node.getTag() == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getDescriptor().hashCode();
+        result = 31 * result + selector.hashCode();
+        result = 31 * result + (getTag() != null ? getTag().hashCode() : 0);
+        return result;
+    }
 }

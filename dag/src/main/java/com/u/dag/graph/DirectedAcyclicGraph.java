@@ -12,7 +12,7 @@ import java.util.List;
 
 /**
  * A class which represents a simple directed acyclic graph.
- * This class is internal of android and was copied.
+ * This class is internal of android and was copied with minor tweaks added.
  */
 public final class DirectedAcyclicGraph implements Graph {
     private final Pools.Pool<ArrayList<Node>> mListPool = new Pools.SimplePool<>(10);
@@ -21,13 +21,16 @@ public final class DirectedAcyclicGraph implements Graph {
     private final ArrayList<Node> mSortResult = new ArrayList<>();
     private final HashSet<Node> mSortTmpMarked = new HashSet<>();
 
+    private boolean topologyChanged;
+
     @Override
     @Nullable
     public Node getRoot() {
         if (mGraph.isEmpty()) {
             return null;
         }
-        return mGraph.keyAt(0);
+        List<Node> sortedNodes = getAllNodesSorted();
+        return sortedNodes.get(sortedNodes.size() - 1);
     }
 
     /**
@@ -41,6 +44,7 @@ public final class DirectedAcyclicGraph implements Graph {
     public void add(@NonNull Node node) {
         if (!mGraph.containsKey(node)) {
             mGraph.put(node, null);
+            topologyChanged = true;
         }
     }
 
@@ -76,6 +80,8 @@ public final class DirectedAcyclicGraph implements Graph {
         }
         // Finally add the edge to the list
         edges.add(to);
+
+        topologyChanged = true;
     }
 
     /**
@@ -133,6 +139,7 @@ public final class DirectedAcyclicGraph implements Graph {
             }
         }
         mGraph.clear();
+        topologyChanged = true;
     }
 
     /**
@@ -145,14 +152,17 @@ public final class DirectedAcyclicGraph implements Graph {
      */
     @NonNull
     public List<Node> getAllNodesSorted() {
-        mSortResult.clear();
-        mSortTmpMarked.clear();
+        if (topologyChanged) {
+            mSortResult.clear();
+            mSortTmpMarked.clear();
 
-        // Start a DFS from each node in the graph
-        for (int i = 0, size = mGraph.size(); i < size; i++) {
-            dfs(mGraph.keyAt(i), mSortResult, mSortTmpMarked);
+            // Start a DFS from each node in the graph
+            for (int i = 0, size = mGraph.size(); i < size; i++) {
+                dfs(mGraph.keyAt(i), mSortResult, mSortTmpMarked);
+            }
+
+            topologyChanged = false;
         }
-
         return mSortResult;
     }
 

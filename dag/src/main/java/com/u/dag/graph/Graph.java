@@ -8,7 +8,6 @@ import java.util.List;
 /**
  * Created by saguilera on 6/10/17.
  */
-
 public interface Graph {
 
     /**
@@ -45,12 +44,12 @@ public interface Graph {
     @Nullable List<Node> getOutgoingEdges(@NonNull Node node);
 
     /**
-     * Return all nodes sorted from start to end.
+     * Return all nodes sorted from end to start.
      * EG:
      * A -> B -> D -> E
      *  \_> C
      *
-     * sort = [A, B, C, D, E]
+     * sort = [E, D, B, C, A]
      *
      * @return list of nodes sorted
      */

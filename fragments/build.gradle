@@ -12,6 +12,7 @@ android {
 }
 
 dependencies {
-    compile support.utils
+    compile support.fragments
     testCompile 'junit:junit:4.12'
+    compile project(path:':dag')
 }
