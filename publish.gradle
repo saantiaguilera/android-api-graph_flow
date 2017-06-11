@@ -4,13 +4,16 @@ apply plugin: "com.jfrog.bintray"
 def siteUrl = 'https://github.com/saantiaguilera/android-api-graph_flow'
 def gitUrl = 'https://github.com/saantiaguilera/android-api-graph_flow.git'
 
+group = groupName
+version = versionName
+
 install {
     repositories.mavenInstaller {
         pom {
             project {
                 packaging 'aar'
 
-                name 'com.saantiaguilera:graph_flow'
+                name "com.saantiaguilera:graph_flow:$artifactName"
                 description = 'Show a flow of fragments/views/wver via connections in a graph'
                 url siteUrl
 
@@ -74,7 +77,7 @@ bintray {
     configurations = ['archives']
     pkg {
         repo = "maven"
-        name = "com.saantiaguilera:graph_flow"
+        name = "com.saantiaguilera:graph_flow:$artifactName"
         websiteUrl = siteUrl
         vcsUrl = gitUrl
         licenses = ['GPL-3.0']
