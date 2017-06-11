@@ -23,3 +23,6 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
+# Keep the whole class, it uses reflection so better no optimizations/nothing on it
+-keep class com.u.views.NodeViewSwitcher{ *; }
