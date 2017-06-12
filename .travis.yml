@@ -38,8 +38,6 @@ branches:
 
 jobs:
   include:
-    - stage: prepare cache
-      script: bash "ci/run_prepare_cache.sh"
     - stage: test
       script: bash "ci/run_script.sh"
       env: TEST_SUITE="core:build" MODULE_DIR="core"
@@ -63,7 +61,7 @@ jobs:
         api_key: $GITHUB_OAUTH_TOKEN
         skip_cleanup: true
         on:
-          tags: true
+          branch: master
 
 env:
   global:
