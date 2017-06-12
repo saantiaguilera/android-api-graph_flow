@@ -6,6 +6,9 @@ language: android
 
 android:
   components:
+    - tools
+    - platform-tools
+    - tools
     - build-tools-25.0.3
     - android-25
     - extra-google-m2repository
@@ -66,3 +69,4 @@ env:
   global:
   - export GRADLE_VERSION=$(sed -n "/[0-9]\.[0-9]/p" gradle/wrapper/gradle-wrapper.properties | cut -c 67-69)
   - TERM=dumb
+  - STDOUT_FILTERS="ci/stdout_filters.sed"
