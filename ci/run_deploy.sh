@@ -11,6 +11,8 @@ if [ $EXIT_CODE -eq 0 ]; then
 	for module in ${PUBLISH_MODULES[@]}; do
 		./gradlew ${module}:bintrayUpload
 
+		node -e "setTimeout(null,30000)"; # 30 seconds delay
+
 		if [ $? -ne 0 ]; then
 			exit 1
 		fi
