@@ -56,12 +56,6 @@ jobs:
     - stage: deploy
       script: bash "ci/run_deploy.sh"
       env: CI_PUBLISHING="true"
-      deploy:
-        provider: releases
-        api_key: $GITHUB_OAUTH_TOKEN
-        skip_cleanup: true
-        on:
-          branch: master
 
 env:
   global:
