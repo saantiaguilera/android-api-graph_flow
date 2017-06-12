@@ -1,5 +1,9 @@
 ## Changelog
 
+### v1.1.1
+
+- Fixes issues with travis publishing
+
 ### v1.1.0
 
 - Added back with tag feature
