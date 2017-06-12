@@ -27,10 +27,14 @@ dependencies {
 ## Usage
 
 1. Create a `Graph` with nodes and connections. Lets say we have a signup application where:
-  1. You set your name
-  2. You set your age
-  3. If you are <18 you validate something, else skips this
-  4. You set your email
+
+    **a.** You set your name
+  
+    **b.** You set your age
+  
+    **c.** If you are <18 you validate something, else skips this
+  
+    **d.** You set your email
 
 ```Java
   // For this example I'll be using the View component (using fragments its the same but MView.class -> MFragment.class
@@ -97,7 +101,7 @@ dependencies {
 
 ```Java
   router = Router.<View>create()
-    .with(buildGraph())
+    .with(graph)
     .switcher(nodeSwitcher)
     .build();
 ```
@@ -118,10 +122,10 @@ The router is the class in charge of managing the whole graph flow. The router p
 
 - _jump_: Jumps to a given node
 
+## Proguard
+
+This library supports proguard transitively, no need to add extra rules :)
+
 ## Contributing
 
-Feel free to submit me issues or fork it and do pull requests with changes!!
-
-## License
-
-This repository is licensed under GPLv3
+Feel free to submit me issues or fork it and do pull requests with changes!
