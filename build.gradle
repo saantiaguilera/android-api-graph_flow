@@ -30,7 +30,11 @@ ext.isForPublish = (System.getenv('CI') &&
 
 task shouldPublish() {
     doLast {
-        if (!isForPublish()) {
+        if (!isForPublish) {
+            println "ci? ${System.getenv('CI')}"
+            println "travis_branch? ${System.getenv('TRAVIS_BRANCH')}"
+            println "ci_publishing? ${System.getenv('CI_PUBLISHING')}"
+            println "travis_pull_request? ${System.getenv('TRAVIS_PULL_REQUEST')}"
             throw new GradleException('Dont publish. You cant like this.')
         }
     }
