@@ -26,7 +26,6 @@ public final class Router<RenderObject> {
 
     private @NonNull Graph graph;
     private @NonNull Stack<Node> decisions;
-    private Node current;
 
     private List<OnNodeCommitListener<RenderObject>> onNodeCommitListeners;
 
@@ -91,8 +90,6 @@ public final class Router<RenderObject> {
             return null;
         }
 
-        this.current = node;
-
         RenderObject renderObject = nodeSwitcher.commit(node.getDescriptor(), movement, node.hashCode());
 
         for (OnNodeCommitListener<RenderObject> listener : onNodeCommitListeners) {
@@ -143,7 +140,11 @@ public final class Router<RenderObject> {
     @Nullable
     @CheckResult
     public RenderObject next(@NonNull Bundle bundle) {
-        List<Node> outgoingEdges = graph.getOutgoingEdges(current);
+        if (decisions.empty()) {
+            throw new IllegalStateException("Cant move forward if theres no start. Please call first fromRoot or jump");
+        }
+
+        List<Node> outgoingEdges = graph.getOutgoingEdges(decisions.peek());
         if (outgoingEdges == null || outgoingEdges.isEmpty()) {
             //we are at the end
             return null;
@@ -173,11 +174,11 @@ public final class Router<RenderObject> {
     @Nullable
     @CheckResult
     public RenderObject back() {
-        if (current == null) {
+        if (decisions.empty()) {
             return null; // You are calling back before using the router!
         }
 
-        List<Node> incomingEdges = graph.getIncomingEdges(current);
+        List<Node> incomingEdges = graph.getIncomingEdges(decisions.peek());
         if (incomingEdges == null || incomingEdges.isEmpty()) {
             //we are at the beginning
             return null;
