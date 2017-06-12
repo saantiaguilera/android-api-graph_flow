@@ -16,15 +16,8 @@ android {
 dependencies {
     compile support.appCompat
 
-    if (parent.isForPublish) {
-        compile me.core
-        compile me.views
-        compile me.fragments
-        compile me.conductor
-    } else {
-        compile project(path:':core')
-        compile project(path:':views')
-        compile project(path:':fragments')
-        compile project(path:':conductor')
-    }
+    compile project(path:':core')
+    compile project(path:':views')
+    compile project(path:':fragments')
+    compile project(path:':conductor')
 }
