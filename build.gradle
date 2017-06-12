@@ -59,7 +59,8 @@ configure(subprojects.findAll { it.name != 'testapp' }) {
     artifactName = project.name
 
     // Add a variable for knowing if its a publish or not
-    ext.isForPublish = parent.isForPublish
+    ext.isForPublish = (parent.isForPublish &&
+        gradle.startParameter.taskNames.toListString().toLowerCase().contains(project.name))
 
     dependencies {
         testCompile test.junit
