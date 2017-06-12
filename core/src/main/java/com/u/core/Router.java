@@ -215,6 +215,61 @@ public final class Router<RenderObject> {
     }
 
     /**
+     * Move the flow backwards until the node asked. This will throw {@link IllegalStateException} if
+     * the node wasnt already traversed in the flow.
+     *
+     * @param node to go back
+     * @return object rendered from the node
+     */
+    @Nullable
+    @CheckResult
+    public RenderObject back(@NonNull Node node) {
+        if (!graph.contains(node)) {
+            throw new IllegalStateException("Node doesnt exist in the graph. Maybe you have mistakenly used back?");
+        }
+
+        boolean found = false;
+        Stack<Node> copy = (Stack<Node>) decisions.clone();
+        while (!copy.empty() && !found) {
+            Node child = copy.pop();
+            if (child.equals(node)) {
+                found = true;
+            }
+        }
+
+        if (found) {
+            decisions = copy;
+            decisions.push(node);
+            return commit(node, DIRECTION_BACKWARD);
+        } else {
+            throw new IllegalStateException("Node wasnt already traversed. You cant go back to it if you havent gone through yet.");
+        }
+    }
+
+    /**
+     * Move the flow backwards until the node asked. This will throw {@link IllegalStateException} if
+     * the node wasnt already traversed in the flow.
+     *
+     * @param tag of the node to go back
+     * @return object rendered from the node
+     */
+    @Nullable
+    @CheckResult
+    public RenderObject back(@NonNull String tag) {
+        List<Node> nodes = graph.getAllNodesSorted();
+
+        if (nodes != null) {
+            for (Node node : nodes) {
+                if (node.getTag() != null && node.getTag().contentEquals(tag)) {
+                    return back(node);
+                }
+            }
+        }
+
+        throw new IllegalStateException("No node found in the graph for the specified tag: " + tag);
+    }
+
+    /**
      * Jump to the node.
      * This will clear the previous backstack.
      * @param node to jump to
