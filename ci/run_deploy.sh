@@ -1,8 +1,10 @@
 #!/bin/bash
 
-./gradlew shouldPublish
+./gradlew shouldPublish | sed -f "$STDOUT_FILTERS"
 
-if [ $? -eq 0 ]; then
+EXIT_CODE=${PIPESTATUS[0]}
+
+if [ $EXIT_CODE -eq 0 ]; then
 	for module in ${PUBLISH_MODULES[@]}; do
 		./gradlew ${module}:bintrayUpload
 
