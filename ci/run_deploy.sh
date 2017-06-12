@@ -8,6 +8,9 @@ PUBLISH_MODULES=(core conductor views fragments)
 EXIT_CODE=${PIPESTATUS[0]}
 
 if [ $EXIT_CODE -eq 0 ]; then
+	VERSION=$(grep "versionName = .*" gradle.properties | sed -E "s/versionName = (.*)/\1/g")
+	git tag -a v${VERSION} -m "v${VERSION}"
+
 	for module in ${PUBLISH_MODULES[@]}; do
 		./gradlew ${module}:bintrayUpload
 
