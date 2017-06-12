@@ -5,7 +5,7 @@ android {
     buildToolsVersion androidBuildToolsVersion
 
     defaultConfig {
-        minSdkVersion project.minSdkVersion
+        minSdkVersion 16 // Conductor requires it
         targetSdkVersion project.targetSdkVersion
         applicationId "com.u.direction_acyclic_graph"
         versionCode 1
@@ -15,6 +15,16 @@ android {
 
 dependencies {
     compile support.appCompat
-    compile project(path:':core')
-    compile project(path:':views')
+
+    if (parent.isForPublish) {
+        compile me.core
+        compile me.views
+        compile me.fragments
+        compile me.conductor
+    } else {
+        compile project(path:':core')
+        compile project(path:':views')
+        compile project(path:':fragments')
+        compile project(path:':conductor')
+    }
 }

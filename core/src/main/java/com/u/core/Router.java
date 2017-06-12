@@ -26,7 +26,6 @@ public final class Router<RenderObject> {
 
     private @NonNull Graph graph;
     private @NonNull Stack<Node> decisions;
-    private Node current;
 
     private List<OnNodeCommitListener<RenderObject>> onNodeCommitListeners;
 
@@ -91,8 +90,6 @@ public final class Router<RenderObject> {
             return null;
         }
 
-        this.current = node;
-
         RenderObject renderObject = nodeSwitcher.commit(node.getDescriptor(), movement, node.hashCode());
 
         for (OnNodeCommitListener<RenderObject> listener : onNodeCommitListeners) {
@@ -143,7 +140,11 @@ public final class Router<RenderObject> {
     @Nullable
     @CheckResult
     public RenderObject next(@NonNull Bundle bundle) {
-        List<Node> outgoingEdges = graph.getOutgoingEdges(current);
+        if (decisions.empty()) {
+            throw new IllegalStateException("Cant move forward if theres no start. Please call first fromRoot or jump");
+        }
+
+        List<Node> outgoingEdges = graph.getOutgoingEdges(decisions.peek());
         if (outgoingEdges == null || outgoingEdges.isEmpty()) {
             //we are at the end
             return null;
@@ -173,11 +174,11 @@ public final class Router<RenderObject> {
     @Nullable
     @CheckResult
     public RenderObject back() {
-        if (current == null) {
+        if (decisions.empty()) {
             return null; // You are calling back before using the router!
         }
 
-        List<Node> incomingEdges = graph.getIncomingEdges(current);
+        List<Node> incomingEdges = graph.getIncomingEdges(decisions.peek());
         if (incomingEdges == null || incomingEdges.isEmpty()) {
             //we are at the beginning
             return null;
@@ -212,6 +213,61 @@ public final class Router<RenderObject> {
         }
 
         return null;
+    }
+
+    /**
+     * Move the flow backwards until the node asked. This will throw {@link IllegalStateException} if
+     * the node wasnt already traversed in the flow.
+     *
+     * @param node to go back
+     * @return object rendered from the node
+     */
+    @Nullable
+    @CheckResult
+    public RenderObject back(@NonNull Node node) {
+        if (!graph.contains(node)) {
+            throw new IllegalStateException("Node doesnt exist in the graph. Maybe you have mistakenly used back?");
+        }
+
+        boolean found = false;
+        Stack<Node> copy = (Stack<Node>) decisions.clone();
+        while (!copy.empty() && !found) {
+            Node child = copy.pop();
+            if (child.equals(node)) {
+                found = true;
+            }
+        }
+
+        if (found) {
+            decisions = copy;
+            decisions.push(node);
+            return commit(node, DIRECTION_BACKWARD);
+        } else {
+            throw new IllegalStateException("Node wasnt already traversed. You cant go back to it if you havent gone through yet.");
+        }
+    }
+
+    /**
+     * Move the flow backwards until the node asked. This will throw {@link IllegalStateException} if
+     * the node wasnt already traversed in the flow.
+     *
+     * @param tag of the node to go back
+     * @return object rendered from the node
+     */
+    @Nullable
+    @CheckResult
+    public RenderObject back(@NonNull String tag) {
+        List<Node> nodes = graph.getAllNodesSorted();
+
+        if (nodes != null) {
+            for (Node node : nodes) {
+                if (node.getTag() != null && node.getTag().contentEquals(tag)) {
+                    return back(node);
+                }
+            }
+        }
+
+        throw new IllegalStateException("No node found in the graph for the specified tag: " + tag);
     }
 
     /**

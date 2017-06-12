@@ -14,13 +14,16 @@ Add dependencies in your `build.gradle`
 ```groovy
 dependencies {
   // Core library.
-  compile "com.saantiaguilera.graph_flow:core:1.0.0"
+  compile "com.saantiaguilera.graph_flow:core:1.1.0"
   
   // For using it with fragments. Brings support-fragments
-  compile "com.saantiaguilera.graph_flow:fragments:1.0.0"
+  compile "com.saantiaguilera.graph_flow:fragments:1.1.0"
   
   // For using it with views
-  compile "com.saantiaguilera.graph_flow:views:1.0.0"
+  compile "com.saantiaguilera.graph_flow:views:1.1.0"
+  
+  // For using it with conductor
+  compile "com.saantiaguilera.graph_flow:conductor:1.1.0"
 }
 ```
 

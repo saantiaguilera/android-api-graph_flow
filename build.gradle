@@ -23,6 +23,19 @@ wrapper {
     distributionType = Wrapper.DistributionType.ALL
 }
 
+ext.isForPublish = (System.getenv('CI') &&
+    System.getenv('TRAVIS_BRANCH') == "master" &&
+    System.getenv('CI_PUBLISHING') &&
+    !System.getenv(('TRAVIS_PULL_REQUEST')))
+
+task shouldPublish() {
+    doLast {
+        if (!isForPublish()) {
+            throw new GradleException('Dont publish. You cant like this.')
+        }
+    }
+}
+
 apply from: 'dependencies.gradle'
 
 configure(subprojects.findAll { it.name != 'testapp' }) {
@@ -40,6 +53,9 @@ configure(subprojects.findAll { it.name != 'testapp' }) {
     }
 
     artifactName = project.name
+
+    // Add a variable for knowing if its a publish or not
+    ext.isForPublish = parent.isForPublish
 
     dependencies {
         testCompile test.junit

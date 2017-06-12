@@ -6,9 +6,16 @@ ext {
         fragments : "com.android.support:support-fragment:$supportLibraryVersion"
     ]
 
-    coreVersion = project.versionName
+    conductorVersion = '2.1.3'
+    misc = [
+        conductor : "com.bluelinelabs:conductor:$conductorVersion"
+    ]
+
     me = [
-        core : "com.saantiaguilera.graph_flow:core:$coreVersion"
+        core : "com.saantiaguilera.graph_flow:core:${project.versionName}",
+        fragments : "com.saantiaguilera.graph_flow:fragments:${project.versionName}",
+        views : "com.saantiaguilera.graph_flow:views:${project.versionName}",
+        conductor : "com.saantiaguilera.graph_flow:conductor:${project.versionName}"
     ]
 
     junitVersion = '4.12'
