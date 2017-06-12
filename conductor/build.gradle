@@ -1,0 +1,4 @@
+dependencies {
+    compile misc.conductor
+    compile project(path:':core')
+}

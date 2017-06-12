@@ -1,1 +1,1 @@
-include ':testapp', ':core', ':fragments', ':views'
+include ':testapp', ':core', ':fragments', ':views', ':conductor'

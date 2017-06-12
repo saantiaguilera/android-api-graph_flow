@@ -6,6 +6,11 @@ ext {
         fragments : "com.android.support:support-fragment:$supportLibraryVersion"
     ]
 
+    conductorVersion = '2.1.3'
+    misc = [
+        conductor : "com.bluelinelabs:conductor:$conductorVersion"
+    ]
+
     coreVersion = project.versionName
     me = [
         core : "com.saantiaguilera.graph_flow:core:$coreVersion"
