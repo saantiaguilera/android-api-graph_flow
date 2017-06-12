@@ -1,4 +1,15 @@
+android {
+    defaultConfig {
+        minSdkVersion 16 // As per conductor asks
+    }
+}
+
 dependencies {
     compile misc.conductor
-    compile project(path:':core')
+
+    if (isForPublish) {
+        compile me.core
+    } else {
+        compile project(path:':core')
+    }
 }

@@ -6,6 +6,9 @@
 - Added back with node feature
 - Remove unused variables
 - Module conductor created. Gives support to conductor framework
+- Update buildtools version to 25.0.**3**
+- Added travis
+- Publish is done in the cloud
 
 ### v1.0.0
 

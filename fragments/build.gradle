@@ -1,4 +1,9 @@
 dependencies {
     compile support.fragments
-    compile project(path:':core')
+
+    if (isForPublish) {
+        compile me.core
+    } else {
+        compile project(path:':core')
+    }
 }

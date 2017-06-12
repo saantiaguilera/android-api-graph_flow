@@ -1,0 +1,65 @@
+sudo: required
+dist: precise
+group: edge
+
+language: android
+
+android:
+  components:
+    - build-tools-25.0.3
+    - android-25
+    - extra-google-m2repository
+    - extra-android-m2repository
+
+cache:
+  directories:
+    - $HOME/.gradle/caches/$GRADLE_VERSION
+    - $HOME/.gradle/caches/jars-1
+    - $HOME/.gradle/native
+    - $HOME/.gradle/wrapper
+
+before_cache:
+  - rm -rf $HOME/.gradle/daemon/
+  - rm -rf $HOME/.gradle/caches/modules-2/modules-2.lock
+
+jdk: oraclejdk8
+
+git:
+  depth: 10
+
+branches:
+  only:
+    - develop
+    - master
+    - /release-.*$/
+
+jobs:
+  include:
+    - stage: prepare cache
+      script: bash "ci/run_prepare_cache.sh"
+    - stage: test
+      script: bash "ci/run_script.sh"
+      env: TEST_SUITE="core:build" MODULE_DIR="core"
+    - stage: test
+      script: bash "ci/run_script.sh"
+      env: TEST_SUITE="conductor:build" MODULE_DIR="conductor"
+    - stage: test
+      script: bash "ci/run_script.sh"
+      env: TEST_SUITE="views:build" MODULE_DIR="views"
+    - stage: test
+      script: bash "ci/run_script.sh"
+      env: TEST_SUITE="fragments:build" MODULE_DIR="fragment"
+    - stage: deploy
+      script: bash "ci/run_deploy.sh"
+      env: PUBLISH_MODULES=(core conductor views fragments)
+      deploy:
+        provider: releases
+        api_key: $GITHUB_OAUTH_TOKEN
+        skip_cleanup: true
+        on:
+          tags: true
+
+env:
+  global:
+  - export GRADLE_VERSION=$(sed -n "/[0-9]\.[0-9]/p" gradle/wrapper/gradle-wrapper.properties | cut -c 67-69)
+  - TERM=dumb
