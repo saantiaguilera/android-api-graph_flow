@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Modules that will be published
+PUBLISH_MODULES=(core conductor views fragments)
+
 ./gradlew shouldPublish | sed -f "$STDOUT_FILTERS"
 
 EXIT_CODE=${PIPESTATUS[0]}

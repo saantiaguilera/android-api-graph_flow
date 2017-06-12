@@ -25,7 +25,7 @@ wrapper {
 
 ext.isForPublish = (System.getenv('CI') &&
     System.getenv('TRAVIS_BRANCH') == "master" &&
-    System.getenv('PUBLISH_MODULES') &&
+    System.getenv('CI_PUBLISHING') &&
     !System.getenv(('TRAVIS_PULL_REQUEST')))
 
 task shouldPublish() {

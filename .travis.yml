@@ -55,7 +55,7 @@ jobs:
       env: TEST_SUITE="testapp:build" MODULE_DIR="testapp"
     - stage: deploy
       script: bash "ci/run_deploy.sh"
-      env: PUBLISH_MODULES=(core conductor views fragments)
+      env: CI_PUBLISHING="true"
       deploy:
         provider: releases
         api_key: $GITHUB_OAUTH_TOKEN
