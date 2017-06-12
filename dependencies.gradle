@@ -11,9 +11,11 @@ ext {
         conductor : "com.bluelinelabs:conductor:$conductorVersion"
     ]
 
-    coreVersion = project.versionName
     me = [
-        core : "com.saantiaguilera.graph_flow:core:$coreVersion"
+        core : "com.saantiaguilera.graph_flow:core:${project.versionName}",
+        fragments : "com.saantiaguilera.graph_flow:fragments:${project.versionName}",
+        views : "com.saantiaguilera.graph_flow:views:${project.versionName}",
+        conductor : "com.saantiaguilera.graph_flow:conductor:${project.versionName}"
     ]
 
     junitVersion = '4.12'

@@ -49,6 +49,9 @@ jobs:
     - stage: test
       script: bash "ci/run_script.sh"
       env: TEST_SUITE="fragments:build" MODULE_DIR="fragment"
+    - stage: test
+      script: bash "ci/run_script.sh"
+      env: TEST_SUITE="testapp:build" MODULE_DIR="testapp"
     - stage: deploy
       script: bash "ci/run_deploy.sh"
       env: PUBLISH_MODULES=(core conductor views fragments)
