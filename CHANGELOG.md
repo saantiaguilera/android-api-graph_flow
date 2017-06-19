@@ -1,5 +1,9 @@
 ## Changelog
 
+### v1.2.0
+
+- Change groupId
+
 ### v1.1.1
 
 - Fixes issues with travis publishing

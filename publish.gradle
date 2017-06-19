@@ -13,7 +13,7 @@ install {
             project {
                 packaging 'aar'
 
-                name "com.saantiaguilera:graph_flow:$artifactName"
+                name "$groupName:$artifactName"
                 description = 'Show a flow of fragments/views/wver via connections in a graph'
                 url siteUrl
 
@@ -61,7 +61,7 @@ bintray {
     configurations = ['archives']
     pkg {
         repo = "maven"
-        name = "com.saantiaguilera:graph_flow:$artifactName"
+        name = "$groupName:$artifactName"
         websiteUrl = siteUrl
         vcsUrl = gitUrl
         licenses = ['GPL-3.0']
