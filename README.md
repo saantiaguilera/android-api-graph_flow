@@ -1,5 +1,7 @@
 # GraphFlow
 
+[ ![Download](https://api.bintray.com/packages/saantiaguilera/maven/com.saantiaguilera.graphflow%3Acore/images/download.svg) ](https://bintray.com/saantiaguilera/maven/com.saantiaguilera.graphflow%3Acore/_latestVersion) [![Build Status](https://travis-ci.org/saantiaguilera/android-api-graph_flow.svg?branch=master)](https://travis-ci.org/saantiaguilera/android-api-graph_flow)
+
 GraphFlow is a lightweight library for designing 'logic based' UI flows. You create a graph of nodes logically connected where each node represents a UI renderable object (fragment/view/whatever).
  
 ![](https://cdn-images-1.medium.com/max/1200/1*fCdB8ltfNn-OaXzC7ULRDQ.png) 
@@ -14,16 +16,16 @@ Add dependencies in your `build.gradle`
 ```groovy
 dependencies {
   // Core library.
-  compile "com.saantiaguilera.graph_flow:core:<latest_version>"
+  compile "com.saantiaguilera.graphflow:core:<latest_version>"
   
   // For using it with fragments. Brings support-fragments
-  compile "com.saantiaguilera.graph_flow:fragments:<latest_version>"
+  compile "com.saantiaguilera.graphflow:fragments:<latest_version>"
   
   // For using it with views
-  compile "com.saantiaguilera.graph_flow:views:<latest_version>"
+  compile "com.saantiaguilera.graphflow:views:<latest_version>"
   
   // For using it with conductor
-  compile "com.saantiaguilera.graph_flow:conductor:<latest_version>"
+  compile "com.saantiaguilera.graphflow:conductor:<latest_version>"
 }
 ```
 
