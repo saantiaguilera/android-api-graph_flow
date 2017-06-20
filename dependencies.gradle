@@ -12,10 +12,10 @@ ext {
     ]
 
     me = [
-        core : "com.saantiaguilera.graph_flow:core:${project.versionName}",
-        fragments : "com.saantiaguilera.graph_flow:fragments:${project.versionName}",
-        views : "com.saantiaguilera.graph_flow:views:${project.versionName}",
-        conductor : "com.saantiaguilera.graph_flow:conductor:${project.versionName}"
+        core : "com.saantiaguilera.graphflow:core:${project.versionName}",
+        fragments : "com.saantiaguilera.graphflow:fragments:${project.versionName}",
+        views : "com.saantiaguilera.graphflow:views:${project.versionName}",
+        conductor : "com.saantiaguilera.graphflow:conductor:${project.versionName}"
     ]
 
     junitVersion = '4.12'
