@@ -43,6 +43,8 @@ publishGlobalConfigurations {
 
     licenseUrl = "http://www.gnu.org/licenses/gpl-3.0.html"
     licenseName = "GPL-3.0"
+
+    publishOrder = [ 'core', 'fragments', 'views', 'conductor' ]
 }
 
 ext.isForPublish = (System.getenv('CI') &&
