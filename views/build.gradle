@@ -1,7 +1,9 @@
-dependencies {
-    if (isForPublish) {
-        compile me.core
-    } else {
-        compile project(path:':core')
+android {
+    defaultConfig {
+        minSdkVersion minSdkVersions.views
     }
+}
+
+dependencies {
+    compile project(path:':core')
 }

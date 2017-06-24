@@ -6,7 +6,13 @@ GraphFlow is a lightweight library for designing 'logic based' UI flows. You cre
  
 ![](https://cdn-images-1.medium.com/max/1200/1*fCdB8ltfNn-OaXzC7ULRDQ.png) 
  
-### Minimum api level: 14
+### Minimum api level
+
+Per module:
+- :core: 9
+- :fragments: 9
+- :views: 14
+- :conductor: 16
 
 ### This library was heavily influenced by a [Reddit Post](https://www.reddit.com/r/androiddev/comments/6geu04/mastering_viewpager_with_directed_acyclic_graph/)
 
