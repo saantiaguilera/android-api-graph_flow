@@ -1,6 +1,6 @@
 # GraphFlow
 
-[ ![Download](https://api.bintray.com/packages/saantiaguilera/maven/com.saantiaguilera.graphflow%3Acore/images/download.svg) ](https://bintray.com/saantiaguilera/maven/com.saantiaguilera.graphflow%3Acore/_latestVersion) [![Build Status](https://travis-ci.org/saantiaguilera/android-api-graph_flow.svg?branch=master)](https://travis-ci.org/saantiaguilera/android-api-graph_flow)
+[![Build Status](https://travis-ci.org/saantiaguilera/android-api-graph_flow.svg?branch=develop)](https://travis-ci.org/saantiaguilera/android-api-graph_flow) [![Download](https://api.bintray.com/packages/saantiaguilera/maven/com.saantiaguilera.graphflow.core/images/download.svg) ](https://bintray.com/saantiaguilera/maven/com.saantiaguilera.graphflow.core/_latestVersion)
 
 GraphFlow is a lightweight library for designing 'logic based' UI flows. You create a graph of nodes logically connected where each node represents a UI renderable object (fragment/view/whatever).
  
