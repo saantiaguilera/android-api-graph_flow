@@ -1,3 +1,9 @@
+android {
+    defaultConfig {
+        minSdkVersion minSdkVersions.core
+    }
+}
+
 dependencies {
     compile support.utils
 }

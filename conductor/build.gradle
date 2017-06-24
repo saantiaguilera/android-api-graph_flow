@@ -1,15 +1,11 @@
 android {
     defaultConfig {
-        minSdkVersion 16 // As per conductor asks
+        minSdkVersion minSdkVersions.conductor
     }
 }
 
 dependencies {
     compile misc.conductor
 
-    if (isForPublish) {
-        compile me.core
-    } else {
-        compile project(path:':core')
-    }
+    compile project(path:':core')
 }

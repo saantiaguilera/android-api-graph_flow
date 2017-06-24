@@ -1,4 +1,11 @@
 ext {
+    minSdkVersions = [
+        fragments : 9,
+        core      : 9,
+        views     : 14,
+        conductor : 16
+    ]
+
     supportLibraryVersion = '25.4.0'
     support = [
         appCompat : "com.android.support:appcompat-v7:$supportLibraryVersion",
@@ -12,10 +19,10 @@ ext {
     ]
 
     me = [
-        core : "com.saantiaguilera.graphflow:core:${project.versionName}",
-        fragments : "com.saantiaguilera.graphflow:fragments:${project.versionName}",
-        views : "com.saantiaguilera.graphflow:views:${project.versionName}",
-        conductor : "com.saantiaguilera.graphflow:conductor:${project.versionName}"
+        core : "com.saantiaguilera.graphflow:core:${libraryVersion}",
+        fragments : "com.saantiaguilera.graphflow:fragments:${libraryVersion}",
+        views : "com.saantiaguilera.graphflow:views:${libraryVersion}",
+        conductor : "com.saantiaguilera.graphflow:conductor:${libraryVersion}"
     ]
 
     junitVersion = '4.12'

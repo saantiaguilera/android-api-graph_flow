@@ -1,9 +1,19 @@
+apply plugin: 'com.saantiaguilera.gradle.publish.helper'
+
 buildscript {
     repositories {
         jcenter()
+
+        // Until its added to jcenter
+        maven {
+            url 'https://dl.bintray.com/saantiaguilera/maven/'
+        }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:2.3.2'
+
+        classpath "com.saantiaguilera.gradle.publish.helper:core:2.0.1"
+
         classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7.3'
         classpath 'com.github.dcendents:android-maven-gradle-plugin:1.5'
     }
@@ -21,6 +31,19 @@ allprojects {
 wrapper {
     version = '3.5'
     distributionType = Wrapper.DistributionType.ALL
+}
+
+publishGlobalConfigurations {
+    groupId = groupName
+    versionName = libraryVersion
+
+    url = "https://github.com/saantiaguilera/android-api-graph_flow"
+
+    bintrayUser = System.getenv('BINTRAY_USER')
+    bintrayApiKey = System.getenv('BINTRAY_KEY')
+
+    licenseUrl = "https://www.gnu.org/licenses/gpl-3.0.en.html"
+    licenseName = "GNU GENERAL PUBLIC LICENSE"
 }
 
 ext.isForPublish = (System.getenv('CI') &&
@@ -49,24 +72,15 @@ configure(subprojects.findAll { it.name != 'testapp' }) {
         compileSdkVersion project.targetSdkVersion.toInteger()
         buildToolsVersion androidBuildToolsVersion
         defaultConfig {
-            minSdkVersion project.minSdkVersion
             targetSdkVersion project.targetSdkVersion
             consumerProguardFiles 'proguard-rules.pro'
-            versionName = project.versionName
+            versionName = libraryVersion
         }
     }
-
-    artifactName = project.name
-
-    // Add a variable for knowing if its a publish or not
-    ext.isForPublish = (parent.isForPublish &&
-        gradle.startParameter.taskNames.toListString().toLowerCase().contains(project.name))
 
     dependencies {
         testCompile test.junit
     }
-
-    apply from: '../publish.gradle'
 }
 
 task clean(type:Delete) {
