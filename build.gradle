@@ -3,7 +3,6 @@ apply plugin: 'com.saantiaguilera.gradle.publish.helper'
 buildscript {
     repositories {
         jcenter()
-
         // Until its added to jcenter
         maven {
             url 'https://dl.bintray.com/saantiaguilera/maven/'
@@ -12,7 +11,7 @@ buildscript {
     dependencies {
         classpath 'com.android.tools.build:gradle:2.3.2'
 
-        classpath "com.saantiaguilera.gradle.publish.helper:core:2.0.1"
+        classpath "com.saantiaguilera.gradle.publish.helper:core:2.0.2"
 
         classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7.3'
         classpath 'com.github.dcendents:android-maven-gradle-plugin:1.5'
@@ -42,8 +41,8 @@ publishGlobalConfigurations {
     bintrayUser = System.getenv('BINTRAY_USER')
     bintrayApiKey = System.getenv('BINTRAY_KEY')
 
-    licenseUrl = "https://www.gnu.org/licenses/gpl-3.0.en.html"
-    licenseName = "GNU GENERAL PUBLIC LICENSE"
+    licenseUrl = "http://www.gnu.org/licenses/gpl-3.0.html"
+    licenseName = "GPL-3.0"
 }
 
 ext.isForPublish = (System.getenv('CI') &&
